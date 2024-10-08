@@ -1,12 +1,32 @@
 <!DOCTYPE html>
 <style>
-    .header { font: 18px/1.5 sans-serif; list-style: none; display: flex; gap: 2rem;}
-    .footer { font: 18px/1.5 sans-serif; list-style: none; }
+    .nav {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 2rem;
+        background-color: #f1f1f1;
+    }
+    .header {
+        font: 18px/1.5 sans-serif;
+        list-style: none;
+        display: flex;
+        padding: 0;
+        gap: 2rem;
+    }
+    .active {
+        color: red;
+        font-weight: bold;
+    }
+    .footer {
+        font: 18px/1.5 sans-serif;
+        list-style: none;
+    }
 </style>
 <html>
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
         {% endblock %}
@@ -14,16 +34,22 @@
         {% block javascripts %}
         {% endblock %}
     </head>
-    <body class="background-color: #74992e">
-        <ul class="header">
-            <li><a href="{{ path('app_index') }}">Home</a></li>
-            <li><a href="{{ path('app_login') }}">Login</a></li>
-            <li><a href="{{ path('app_logout') }}">Logout</a></li>
-            <li><a href="{{ path('app_register') }}">Register</a></li>
-            <li><a href="{{ path('app_gestion') }}">Gestion</a></li>
-            <li><a href="{{ path('app_admin') }}">Admin</a></li>
-        </ul>
-
+    <body>
+        <div class="nav">
+            <ul class="header">
+                <li><a href="{{ path('app_index') }}" class="{{ app.request.get('_route') == 'app_index' ? 'active' : '' }}">Home</a></li>
+                <li><a href="{{ path('app_gestion') }}" class="{{ app.request.get('_route') == 'app_gestion' ? 'active' : '' }}">Gestion</a></li>
+                <li><a href="{{ path('app_admin') }}" class="{{ app.request.get('_route') == 'app_admin' ? 'active' : '' }}">Admin</a></li>
+            </ul>
+            <ul class="header">
+                {% if app.user %}
+                    <li><a href="{{ path('app_logout') }}" class="{{ app.request.get('_route') == 'app_logout' ? 'active' : '' }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ path('app_login') }}" class="{{ app.request.get('_route') == 'app_login' ? 'active' : '' }}">Login</a></li>
+                    <li><a href="{{ path('app_register') }}" class="{{ app.request.get('_route') == 'app_register' ? 'active' : '' }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
         {% if app.user %}
             <p>Connecté en tant que {{ app.user.email }}</p>
         {% endif %}
