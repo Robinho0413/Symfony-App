@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Événements{% endblock %}
+
+{% block body %}
+<h1>Liste des Événements</h1>
+
+<a href="{{ path('evenement_create') }}" class="btn btn-primary">Créer un nouvel événement</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Date de début</th>
+            <th>Date de fin</th>
+            <th>Visibilité</th>
+            <th>Utilisateurs Associés</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for evenement in evenements %}
+            <tr>
+                <td>{{ evenement.title }}</td>
+                <td>{{ evenement.description }}</td>
+                <td>{{ evenement.startDateTime|date('d/m/Y H:i') }}</td>
+                <td>{{ evenement.endDateTime|date('d/m/Y H:i') }}</td>
+                <td>{{ evenement.visibility == 'public' ? 'Public' : 'Privé' }}</td>
+                <td>
+                    {% if evenement.users is not empty %}
+                        <ul>
+                            {% for user in evenement.users %}
+                                <li>{{ user.email }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        Aucun utilisateur associé
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('evenement_edit', { id: evenement.id }) }}" class="btn btn-secondary">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Aucun événement trouvé.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

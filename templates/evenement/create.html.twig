@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un Événement{% endblock %}
+
+{% block body %}
+<h1>Créer un nouvel Événement</h1>
+
+{{ form_start(form) }}
+
+    {# Afficher les erreurs générales du formulaire #}
+    {% if form.vars.errors is not empty %}
+        <div class="alert alert-danger">
+            {{ form_errors(form) }}
+        </div>
+    {% endif %}
+
+    {# Afficher chaque champ avec ses erreurs éventuelles #}
+    <div class="form-group">
+        {{ form_label(form.startDateTime) }}
+        {{ form_widget(form.startDateTime) }}
+        {{ form_errors(form.startDateTime) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.endDateTime) }}
+        {{ form_widget(form.endDateTime) }}
+        {{ form_errors(form.endDateTime) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.title) }}
+        {{ form_widget(form.title) }}
+        {{ form_errors(form.title) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        {{ form_errors(form.description) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.visibility) }}
+        {{ form_widget(form.visibility) }}
+        {{ form_errors(form.visibility) }}
+    </div>
+
+    <button class="btn btn-primary">Enregistrer</button>
+{{ form_end(form) }}
+{% endblock %}

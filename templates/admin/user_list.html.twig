@@ -1,10 +1,12 @@
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Liste des utilisateurs{% endblock %}
 
 {% block body %}
     <h1>Liste des utilisateurs</h1>
+
+    <!-- Bouton Ajouter un utilisateur -->
+    <a href="{{ path('app_admin_user_form') }}" class="btn btn-primary" style="margin-bottom: 20px;">Ajouter un utilisateur</a>
 
     <table class="table table-striped">
         <thead>
@@ -14,6 +16,7 @@
                 <th>Prénom</th>
                 <th>Email</th>
                 <th>Activé</th>
+                <th>Actions</th> <!-- Colonne pour les actions -->
             </tr>
         </thead>
         <tbody>
@@ -24,10 +27,15 @@
                     <td>{{ user.prenom }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.actif ? 'Oui' : 'Non' }}</td>
+                    <td>
+                        <!-- Bouton Modifier -->
+                        <a href="{{ path('app_admin_user_form', { id: user.id }) }}" class="btn btn-secondary">Modifier</a>
+                        <!-- Ici, tu peux ajouter d'autres boutons comme Supprimer si nécessaire -->
+                    </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="5">Aucun utilisateur trouvé.</td>
+                    <td colspan="6">Aucun utilisateur trouvé.</td>
                 </tr>
             {% endfor %}
         </tbody>
